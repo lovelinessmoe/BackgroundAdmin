@@ -79,7 +79,7 @@
 
         table.render({
             elem: '#currentTableId',//对应的ID table id="currentTableId"
-            url: layui.api.api + 'table',//ajax异步请求
+            url: layui.api.api + 'getAccount',
             method: 'get',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
@@ -90,15 +90,31 @@
             cols: [
                 [
                     {type: "checkbox", width: 50},
-                    {field: 'id', width: 80, title: 'ID', sort: true},
-                    {field: 'username', width: 80, title: '用户名'},
-                    {field: 'sex', width: 80, title: '性别', sort: true},
-                    {field: 'city', width: 80, title: '城市'},
-                    {field: 'sign', title: '签名', minWidth: 150},
-                    {field: 'experience', width: 80, title: '积分', sort: true},
-                    {field: 'score', width: 80, title: '评分', sort: true},
-                    {field: 'classify', width: 80, title: '职业'},
-                    {field: 'wealth', width: 135, title: '财富', sort: true},
+                    {field: 'uId', width: 80, title: 'ID', sort: true},
+                    {field: 'uName', width: 80, title: '用户名', sort: true},
+                    {field: 'uSex', width: 80, title: '性别'},
+                    {
+                        field: 'uAvatarUrl', width: 80, title: '头像', style: 'height : 80 ;padding:0',
+                        templet: function (d) {
+                            return "<img src='" + d.uAvatarUrl + "'style = 'height :80px;'/>"
+                        }
+                    },
+                    {field: 'uQbcId', width: 120, title: '用户等级'},
+                    {field: 'stuNo', width: 120, title: '学号'},
+                    {field: 'uPhone', width: 120, title: '联系电话'},
+                    {field: 'uSchool', width: 120, title: '学校'},
+                    {
+                        field: 'uStatus', width: 120, title: '用户状态',
+                        templet: function (d) {
+                            var state = "";
+                            if (d.uStatus == "1") {
+                                state = "<input type='checkbox' value='" + d.uId + "' lay-filter='stat' checked='checked' name='status'  lay-skin='switch' lay-text='开启|关闭' >";
+                            } else {
+                                state = "<input type='checkbox' value='" + d.uId + "'  lay-filter='stat'  name='status'  lay-skin='switch' lay-text='开启|关闭' >";
+                            }
+                            return state;
+                        }
+                    },
                     {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
                 ]
             ],
@@ -107,6 +123,23 @@
             page: true,
             skin: 'line'
         });
+
+        // 监听开关状态
+        form.on("switch(stat)", function (obj) {
+            console.log(obj);
+            var e = obj.elem.checked;
+            var id = this.value;
+            var stat= e==true ? 1:0;
+            $.post(layui.api.api + 'switch', {
+                id: id,
+                stat : stat
+            }, function (res) {
+                console.log(res);
+                layer.msg(res.msg);
+            });
+        });
+
+
 
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
@@ -140,7 +173,7 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/table/add.html',
+                    content: '../page/table/add',
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -159,6 +192,7 @@
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
+            console.log(data);
             if (obj.event === 'edit') {
 
                 var index = layer.open({
@@ -168,8 +202,11 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/table/edit.html',
-                });
+                    content:
+                        $.post('../page/table/edit', {
+                            data: data
+                        })
+            });
                 $(window).on("resize", function () {
                     layer.full(index);
                 });
@@ -181,7 +218,6 @@
                 });
             }
         });
-
     });
 </script>
 

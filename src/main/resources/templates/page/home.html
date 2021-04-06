@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>首页二</title>
+    <title>首页</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -54,7 +54,7 @@
                                                         <h5>用户统计</h5>
                                                     </div>
                                                     <div class="panel-content">
-                                                        <h1 class="no-margins">1234</h1>
+                                                        <h1 class="no-margins" th:text="${userCount}">1234</h1>
                                                         <small>当前分类总记录数</small>
                                                     </div>
                                                 </div>

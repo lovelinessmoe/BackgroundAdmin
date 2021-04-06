@@ -1,6 +1,5 @@
 package com.loveliness.layui.demo.controller.api;
 
-import com.alibaba.fastjson.JSON;
 import com.loveliness.layui.demo.entity.ResEntity;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
@@ -23,46 +22,52 @@ public class FIleController {
 
     /**
      * 图片放回本地
-     * @param file  前端传回的文件
-     * @return      文件路径
+     *
+     * @param file 前端传回的文件
+     * @return 文件路径
      */
     @SneakyThrows
     @ResponseBody
-    public String photoUpload(MultipartFile file) {
+    private String photoUpload(MultipartFile file) {
         String path = "/Users/loveliness/Desktop/Photo/";
         File file1 = new File(path + file.getOriginalFilename());
 
-        file1.createNewFile();
-        //复制文件
-        file.transferTo(file1);
-        return file1.getAbsolutePath();
+        if (file1.createNewFile()) {
+            //复制文件
+            file.transferTo(file1);
+            return file1.getAbsolutePath();
+        } else {
+            return "";
+        }
     }
 
 
     /**
      * 单文件上传
-     * @param file  前端传回的文件
-     * @return      JSON
+     *
+     * @param file 前端传回的文件
+     * @return JSON
      */
 
     @ResponseBody
     @RequestMapping("/photo")
-    public String photo(MultipartFile file) {
+    public ResEntity photo(MultipartFile file) {
         String path = photoUpload(file);
 
-        Map<String, String> data = new HashMap<>(16);
-        data.put("src",path);
+        if ("".equals(path)) {
+            return null;
+        } else {
+            Map<String, String> data = new HashMap<>(16);
+            data.put("src", path);
 
-        ResEntity resEntity = new ResEntity();
-        resEntity.setCode(1);
-        resEntity.setMsg(" ");
-        resEntity.setData(data);
+            ResEntity resEntity = new ResEntity();
+            resEntity.setCode(1);
+            resEntity.setMsg(" ");
+            resEntity.setData(data);
 
-        String s = JSON.toJSONString(resEntity);
-        System.out.println(s);
-        return s;
+//            String s = JSON.toJSONString(resEntity);
+            return resEntity;
+        }
     }
-
-
 }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>后台管理-登陆</title>
@@ -159,8 +159,9 @@
             $.post(layui.api.api + "captcha", {}, function (src) {
                 $("#captcha_input").val("");
                 $("#captcha").attr("src", "data:image/png;base64," + src);
+                firstFlag = 1;
             });
-            if (firstFlag === 0) {
+            if (firstFlag !== 0) {
                 $("#captcha_input").focus();
             }
         }
