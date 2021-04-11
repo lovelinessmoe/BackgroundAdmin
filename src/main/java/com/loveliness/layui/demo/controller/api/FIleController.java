@@ -2,6 +2,7 @@ package com.loveliness.layui.demo.controller.api;
 
 import com.loveliness.layui.demo.entity.ResEntity;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,16 +27,18 @@ public class FIleController {
      * @param file 前端传回的文件
      * @return 文件路径
      */
+    @Value("${UploadPath}")
+    private String path;
+
     @SneakyThrows
     @ResponseBody
     private String photoUpload(MultipartFile file) {
-        String path = "/Users/loveliness/Desktop/Photo/";
-        File file1 = new File(path + file.getOriginalFilename());
+        File file1 = new File(path + "Photo/" + file.getOriginalFilename());
 
         if (file1.createNewFile()) {
             //复制文件
             file.transferTo(file1);
-            return file1.getAbsolutePath();
+            return "/Photo/" + file1.getName();
         } else {
             return "";
         }
@@ -61,11 +64,11 @@ public class FIleController {
             data.put("src", path);
 
             ResEntity resEntity = new ResEntity();
-            resEntity.setCode(1);
+            resEntity.setCode(0);
             resEntity.setMsg(" ");
             resEntity.setData(data);
 
-//            String s = JSON.toJSONString(resEntity);
+            System.out.println("resEntity" + resEntity);
             return resEntity;
         }
     }

@@ -34,4 +34,24 @@ public class StudyService {
     public int switchState(String id, String stat) {
         return studyAccountDao.modifyStat(id, stat);
     }
+
+    public StudyAccount editAccountIndex(Integer uId) {
+        return studyAccountDao.getAccount(uId);
+    }
+
+    public int editStudyAccount(StudyAccount data) {
+        return studyAccountDao.editStudyAccount(data);
+    }
+
+    public StudyAccount getAccount(int id) {
+        return studyAccountDao.getAccount(id);
+    }
+
+    public int deleteAccount(String id) {
+        return studyAccountDao.deleteAccount(id);
+    }
+
+    public int addAccount(StudyAccount data) {
+        return studyAccountDao.addAccount(data);
+    }
 }

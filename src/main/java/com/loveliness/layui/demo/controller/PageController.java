@@ -1,9 +1,13 @@
-package com.loveliness.layui.demo.controller.api;
+package com.loveliness.layui.demo.controller;
 
 import com.loveliness.layui.demo.entity.StudyAccount;
+import com.loveliness.layui.demo.entity.User;
 import com.loveliness.layui.demo.mapper.UserDao;
+import com.loveliness.layui.demo.service.StudyService;
+import com.loveliness.layui.demo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -17,13 +21,16 @@ import javax.annotation.Resource;
 public class PageController {
 
     @Resource
-    private UserDao userDao;
+    private UserService userService;
+
+    @Resource
+    private StudyService studyService;
 
 
     @RequestMapping("/home")
     public String home(Model model) {
         //总用户数
-        int count = userDao.getCount();
+        int count = userService.getCount();
         model.addAttribute("userCount", count);
         return "page/home";
     }
@@ -119,9 +126,17 @@ public class PageController {
     }
 
     @RequestMapping("/table/edit")
-    public String edit(Model model, String data) {
-        System.out.println("edit data"+data);
-        model.addAttribute("data", data);
+    public String edit() {
+        return "page/table/edit";
+    }
+
+
+    @RequestMapping("/table/edit/{uId}")
+    public String editAccount(Model model, @PathVariable("uId") Integer uId) {
+
+        StudyAccount studyAccount = studyService.editAccountIndex(uId);
+        System.out.println("studyAccount:"+studyAccount);
+        model.addAttribute("user", studyAccount);
         return "page/table/edit";
     }
 }

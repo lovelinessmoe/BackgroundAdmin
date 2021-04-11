@@ -1,43 +1,222 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.loveliness.layui.demo.mapper.StudyAccountDao">
-    <resultMap id="BaseResultMap" type="com.loveliness.layui.demo.entity.StudyAccount">
-        <id column="u_id" jdbcType="INTEGER" property="uId"/>
-        <result column="u_weixin_name" jdbcType="VARCHAR" property="uWeixinName"/>
-        <result column="u_name" jdbcType="VARCHAR" property="uName"/>
-        <result column="u_pwd" jdbcType="VARCHAR" property="uPwd"/>
-        <result column="u_sex" jdbcType="VARCHAR" property="uSex"/>
-        <result column="u_avatar_url" jdbcType="VARCHAR" property="uAvatarUrl"/>
-        <result column="u_auth_code" jdbcType="VARCHAR" property="uAuthCode"/>
-        <result column="u_qbc_id" jdbcType="INTEGER" property="uQbcId"/>
-        <result column="stu_no" jdbcType="VARCHAR" property="stuNo"/>
-        <result column="stu_id" jdbcType="VARCHAR" property="stuId"/>
-        <result column="u_phone" jdbcType="VARCHAR" property="uPhone"/>
-        <result column="u_company" jdbcType="VARCHAR" property="uCompany"/>
-        <result column="u_school" jdbcType="VARCHAR" property="uSchool"/>
-        <result column="u_education" jdbcType="VARCHAR" property="uEducation"/>
-        <result column="u_wxopenid" jdbcType="VARCHAR" property="uWxopenid"/>
-        <result column="u_create_time" jdbcType="INTEGER" property="uCreateTime"/>
-        <result column="u_update_time" jdbcType="INTEGER" property="uUpdateTime"/>
-        <result column="u_status" jdbcType="TINYINT" property="uStatus"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-    u_id, u_weixin_name, u_name, u_pwd, u_sex, u_avatar_url, u_auth_code, u_qbc_id, stu_no, 
+	<resultMap id="BaseResultMap" type="com.loveliness.layui.demo.entity.StudyAccount">
+		<id column="u_id" jdbcType="INTEGER" property="uId"/>
+		<result column="u_weixin_name" jdbcType="VARCHAR" property="uWeixinName"/>
+		<result column="u_name" jdbcType="VARCHAR" property="uName"/>
+		<result column="u_pwd" jdbcType="VARCHAR" property="uPwd"/>
+		<result column="u_sex" jdbcType="VARCHAR" property="uSex"/>
+		<result column="u_avatar_url" jdbcType="VARCHAR" property="uAvatarUrl"/>
+		<result column="u_auth_code" jdbcType="VARCHAR" property="uAuthCode"/>
+		<result column="u_qbc_id" jdbcType="INTEGER" property="uQbcId"/>
+		<result column="stu_no" jdbcType="VARCHAR" property="stuNo"/>
+		<result column="stu_id" jdbcType="VARCHAR" property="stuId"/>
+		<result column="u_phone" jdbcType="VARCHAR" property="uPhone"/>
+		<result column="u_company" jdbcType="VARCHAR" property="uCompany"/>
+		<result column="u_school" jdbcType="VARCHAR" property="uSchool"/>
+		<result column="u_education" jdbcType="VARCHAR" property="uEducation"/>
+		<result column="u_wxopenid" jdbcType="VARCHAR" property="uWxopenid"/>
+		<result column="u_create_time" jdbcType="INTEGER" property="uCreateTime"/>
+		<result column="u_update_time" jdbcType="INTEGER" property="uUpdateTime"/>
+		<result column="u_status" jdbcType="TINYINT" property="uStatus"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		u_id, u_weixin_name, u_name, u_pwd, u_sex, u_avatar_url, u_auth_code, u_qbc_id, stu_no,
     stu_id, u_phone, u_company, u_school, u_education, u_wxopenid, u_create_time, u_update_time, 
     u_status
-  </sql>
+	</sql>
+	<insert id="addAccount" parameterType="com.loveliness.layui.demo.entity.StudyAccount">
+		insert into study_account
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uWeixinName != null">
+				u_weixin_name,
+			</if>
+			<if test="uName != null">
+				u_name,
+			</if>
+			<if test="uPwd != null">
+				u_pwd,
+			</if>
+			<if test="uSex != null">
+				u_sex,
+			</if>
+			<if test="uAvatarUrl != null">
+				u_avatar_url,
+			</if>
+			<if test="uAuthCode != null">
+				u_auth_code,
+			</if>
+			<if test="uQbcId != null">
+				u_qbc_id,
+			</if>
+			<if test="stuNo != null">
+				stu_no,
+			</if>
+			<if test="stuId != null">
+				stu_id,
+			</if>
+			<if test="uPhone != null">
+				u_phone,
+			</if>
+			<if test="uCompany != null">
+				u_company,
+			</if>
+			<if test="uSchool != null">
+				u_school,
+			</if>
+			<if test="uEducation != null">
+				u_education,
+			</if>
+			<if test="uWxopenid != null">
+				u_wxopenid,
+			</if>
+			<if test="uCreateTime != null">
+				u_create_time,
+			</if>
+			<if test="uUpdateTime != null">
+				u_update_time,
+			</if>
+			<if test="uStatus != null">
+				u_status,
+			</if>
 
-    <update id="modifyStat">
-      update study_account
-      set u_status = #{stat}
-      where u_id  = #{id}
-    </update>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uWeixinName != null">
+				#{uWeixinName},
+			</if>
+			<if test="uName != null">
+				#{uName},
+			</if>
+			<if test="uPwd != null">
+				#{uPwd},
+			</if>
+			<if test="uSex != null">
+				#{uSex},
+			</if>
+			<if test="uAvatarUrl != null">
+				#{uAvatarUrl},
+			</if>
+			<if test="uAuthCode != null">
+				#{uAuthCode},
+			</if>
+			<if test="uQbcId != null">
+				#{uQbcId},
+			</if>
+			<if test="stuNo != null">
+				#{stuNo},
+			</if>
+			<if test="stuId != null">
+				#{stuId},
+			</if>
+			<if test="uPhone != null">
+				#{uPhone},
+			</if>
+			<if test="uCompany != null">
+				#{uCompany},
+			</if>
+			<if test="uSchool != null">
+				#{uSchool},
+			</if>
+			<if test="uEducation != null">
+				#{uEducation},
+			</if>
+			<if test="uWxopenid != null">
+				#{uWxopenid},
+			</if>
+			<if test="uCreateTime != null">
+				#{uCreateTime},
+			</if>
+			<if test="uUpdateTime != null">
+				#{uUpdateTime},
+			</if>
+			<if test="uStatus != null">
+				#{uStatus},
+			</if>
+		</trim>
+	</insert>
 
-    <select id="getAllAccount" resultType="com.loveliness.layui.demo.entity.StudyAccount" resultMap="BaseResultMap">
-    select
-    *
-    from study_account
-  </select>
+	<update id="modifyStat">
+		update study_account
+		set u_status = #{stat}
+		where u_id = #{id}
+	</update>
+
+	<update id="editStudyAccount" parameterType="com.loveliness.layui.demo.entity.StudyAccount">
+		update study_account
+		<set>
+			<if test="uWeixinName != null">
+				u_weixin_name = #{uWeixinName},
+			</if>
+			<if test="uName != null">
+				u_name = #{uName},
+			</if>
+			<if test="uPwd != null">
+				u_pwd = #{uPwd},
+			</if>
+			<if test="uSex != null">
+				u_sex = #{uSex},
+			</if>
+			<if test="uAvatarUrl != null">
+				u_avatar_url = #{uAvatarUrl},
+			</if>
+			<if test="uAuthCode != null">
+				u_auth_code = #{uAuthCode},
+			</if>
+			<if test="uQbcId != null">
+				u_qbc_id = #{uQbcId},
+			</if>
+			<if test="stuNo != null">
+				stu_no = #{stuNo},
+			</if>
+			<if test="stuId != null">
+				stu_id = #{stuId},
+			</if>
+			<if test="uPhone != null">
+				u_phone = #{uPhone},
+			</if>
+			<if test="uCompany != null">
+				u_company = #{uCompany},
+			</if>
+			<if test="uSchool != null">
+				u_school = #{uSchool},
+			</if>
+			<if test="uEducation != null">
+				u_education = #{uEducation},
+			</if>
+			<if test="uWxopenid != null">
+				u_wxopenid = #{uWxopenid},
+			</if>
+			<if test="uCreateTime != null">
+				u_create_time = #{uCreateTime},
+			</if>
+			<if test="uUpdateTime != null">
+				u_update_time = #{uUpdateTime},
+			</if>
+			<if test="uStatus != null">
+				u_status = #{uStatus},
+			</if>
+		</set>
+		where u_id = #{uId}
+	</update>
+	<delete id="deleteAccount">
+		delete
+		from study_account
+		where u_id = #{id}
+	</delete>
+
+	<select id="getAllAccount" resultType="com.loveliness.layui.demo.entity.StudyAccount" resultMap="BaseResultMap">
+		select *
+		from study_account
+	</select>
+
+	<select id="getAccount" resultType="com.loveliness.layui.demo.entity.StudyAccount" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from study_account
+		where u_id = #{uId}
+	</select>
 
 
 </mapper>

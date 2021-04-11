@@ -9,4 +9,12 @@ public interface StudyAccountDao {
     List<StudyAccount> getAllAccount();
 
     int modifyStat(String id, String stat);
+
+    StudyAccount getAccount(Integer uId);
+
+    int editStudyAccount(StudyAccount data);
+
+    int deleteAccount(String id);
+
+    int addAccount(StudyAccount data);
 }

@@ -129,16 +129,14 @@
             console.log(obj);
             var e = obj.elem.checked;
             var id = this.value;
-            var stat= e==true ? 1:0;
+            var stat = e == true ? 1 : 0;
             $.post(layui.api.api + 'switch', {
                 id: id,
-                stat : stat
+                stat: stat
             }, function (res) {
-                console.log(res);
                 layer.msg(res.msg);
             });
         });
-
 
 
         // 监听搜索操作
@@ -174,6 +172,9 @@
                     shadeClose: true,
                     area: ['100%', '100%'],
                     content: '../page/table/add',
+                    end: function () {
+                        location.reload();
+                    }
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -192,9 +193,8 @@
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
-            console.log(data);
+            var uId = data.uId;
             if (obj.event === 'edit') {
-
                 var index = layer.open({
                     title: '编辑用户',
                     type: 2,
@@ -202,19 +202,33 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content:
-                        $.post('../page/table/edit', {
-                            data: data
-                        })
-            });
+                    content: '../page/table/edit/' + uId,
+                    // $.post('../page/table/edit/' + uId)
+                    success: function (layero, index) {
+                        console.log(data);
+                    },
+                    end: function () {
+                        location.reload();
+                    }
+                });
                 $(window).on("resize", function () {
                     layer.full(index);
                 });
+
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
+                    $.post(layui.api.api + "deleteAccount", {
+                        id: uId
+                    }, function (res) {
+                        if (res.code > 0) {
+                            layer.msg(res.msg);
+                            obj.del();
+                            layer.close(index);
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    });
                 });
             }
         });

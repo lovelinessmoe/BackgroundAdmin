@@ -1,6 +1,5 @@
 package com.loveliness.layui.demo.service;
 
-import cn.hutool.core.lang.UUID;
 import com.loveliness.layui.demo.entity.User;
 import com.loveliness.layui.demo.mapper.UserDao;
 import org.springframework.stereotype.Service;
@@ -32,4 +31,9 @@ public class UserService {
             return 0;
         }
     }
+
+    public int getCount() {
+        return userDao.getCount();
+    }
+
 }
