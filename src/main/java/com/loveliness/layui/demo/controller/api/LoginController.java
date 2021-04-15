@@ -2,7 +2,7 @@ package com.loveliness.layui.demo.controller.api;
 
 import cn.hutool.captcha.AbstractCaptcha;
 import cn.hutool.captcha.CaptchaUtil;
-import com.loveliness.layui.demo.entity.ResEntity;
+import com.loveliness.layui.demo.entity.vo.LayVO;
 import com.loveliness.layui.demo.entity.User;
 import com.loveliness.layui.demo.service.UserService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 
 
 /**
+ * 异步登陆API
+ *
  * @author loveliness
  * @create 2021-03-28 15:58
  */
@@ -28,9 +30,15 @@ public class LoginController {
 
     private AbstractCaptcha captchaCheck;
 
-
+    /**
+     * 登陆
+     *
+     * @param user    用户BEAN
+     * @param captcha 验证码
+     * @return LayVO
+     */
     @RequestMapping("/login")
-    public ResEntity login(User user, String captcha) {
+    public LayVO login(User user, String captcha) {
         /*
         int login;
         String msg;
@@ -45,17 +53,21 @@ public class LoginController {
             login = 0;
             msg = "验证码错误";
         }
-        return new ResEntity(login, msg, 0, null);
+        return new LayVO(login, msg, 0, null);
 
         */
 
         User user1 = new User(null, "1", "1");
         int login1 = userService.login(user1);
 
-        return new ResEntity(login1, "haha", 0, null);
+        return new LayVO(login1, "haha", 0, null);
     }
 
-
+    /**
+     * 获取验证码
+     *
+     * @return IMG的Base64-
+     */
     @RequestMapping("/captcha")
     public String captcha() {
         captchaCheck = CaptchaUtil.createCircleCaptcha(90, 30);

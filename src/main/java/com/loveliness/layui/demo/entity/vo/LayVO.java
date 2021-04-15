@@ -1,4 +1,4 @@
-package com.loveliness.layui.demo.entity;
+package com.loveliness.layui.demo.entity.vo;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResEntity {
+public class LayVO {
 
     @JSONField(ordinal = 1)
-    private int code;
+    private Integer code;
     @JSONField(ordinal = 2)
     private String msg;
     @JSONField(ordinal = 3)
-    private int count;
+    private Integer count;
     @JSONField(ordinal = 4)
     private Object data;
 

@@ -1,6 +1,6 @@
 package com.loveliness.layui.demo.controller.api;
 
-import com.loveliness.layui.demo.entity.ResEntity;
+import com.loveliness.layui.demo.entity.vo.LayVO;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/api")
-public class FIleController {
+public class FileController {
 
 
     /**
@@ -54,7 +54,7 @@ public class FIleController {
 
     @ResponseBody
     @RequestMapping("/photo")
-    public ResEntity photo(MultipartFile file) {
+    public LayVO photo(MultipartFile file) {
         String path = photoUpload(file);
 
         if ("".equals(path)) {
@@ -63,13 +63,13 @@ public class FIleController {
             Map<String, String> data = new HashMap<>(16);
             data.put("src", path);
 
-            ResEntity resEntity = new ResEntity();
-            resEntity.setCode(0);
-            resEntity.setMsg(" ");
-            resEntity.setData(data);
+            LayVO layVO = new LayVO();
+            layVO.setCode(0);
+            layVO.setMsg(" ");
+            layVO.setData(data);
 
-            System.out.println("resEntity" + resEntity);
-            return resEntity;
+            System.out.println("layVO" + layVO);
+            return layVO;
         }
     }
 }
